@@ -1,0 +1,155 @@
+for view project structure on terminal: tree /f
+
+-> Scenario: Using Virtual Environment (venv)
+
+1. Create a Virtual Environment:
+   - python -m venv myVenv
+
+2. Activate Virtual Environment:
+   - myVenv\Scripts\Activate
+   
+3. Install Django in venv:
+   - pip install django
+
+4. Verify Django Installation in venv:
+   - django-admin --version
+
+5. Create Django Project:
+   - django-admin startproject myproject
+
+6. Run Development Server:
+   - cd myproject && python manage.py runserver
+
+7. DeActivate Virtual Environment:
+   - deactivate
+
+--------------------------------------------------------------------------------------------------------
+
+Choosing Between Global vs Virtual Environment
+
+- Global: Use for simple projects, no dependency isolation.
+- Virtual Environment: Use for larger projects, different Django versions, or dependency isolation.
+
+--------------------------------------------------------------------------------------------------------
+
+-> After creating project:
+
+1. Create a Django App
+   - python manage.py startapp myapp
+
+2. Apply database migrations:
+   - python manage.py makemigrations
+   - python manage.py migrate
+
+3. Set Up the Admin Panel
+   - python manage.py createsuperuser
+
+4. Run Test
+   - python manage.py test
+
+--------------------------------------------------------------------------------------------------------
+
+-> in your project directory:
+   - mkdir static
+   - mkdir template
+
+--------------------------------------------------------------------------------------------------------
+
+-> Example of creating model in 'models.py':
+
+   class Customer(models.Model):
+    	username = models.CharField(max_length=20)
+    	email = models.CharField(max_length=30)
+    	gender = models.CharField(max_length=10)
+    	age = models.IntegerField()
+    	phone = models.CharField(max_length=15)
+    	date_time = models.DateTimeField()
+    
+    	def __str__(self):				      # This func is for to show username at admin site Customer table in browser
+      	return self.username
+
+
+-> This {% csrf_token %} is required in customer.html file under the form tag:
+   - <form method="post">
+         {% csrf_token %}
+
+
+-> Add this is a function in 'views.py':
+
+   def customer(request):
+      if request.method == "POST":
+         username = request.POST.get('username')
+         email = request.POST.get('email')
+         gender = request.POST.get('gender')
+         age = request.POST.get('age')
+         phone = request.POST.get('phone')
+
+         if not username or not email or not gender or not age or not phone:   
+            messages.error(request, "All fields are required")
+         
+         else:
+            customer = Customer(username=username, email=email, gender=gender, age=age, phone=phone, date_time=datetime.now())
+            customer.save()
+            messages.success(request, 'Your Details has been submitted successfully!')
+
+      return render(request, "customer.html")
+
+
+-> After this, Apply:
+   - python manage.py makemigrations
+   - python manage.py migrate
+
+--------------------------------------------------------------------------------------------------------
+
+-> for seeing data on console without running the server:
+
+1. First activate shell:
+   - python manage.py shell
+
+2. Then import that 'models.py' (in this example's case):
+   - from home.models import *                     # Here home is app name
+
+3. To show all data:
+   - Customer.objects.all()
+   - Customer.objects.all().first()
+   - Customer.objects.all().last()
+
+4. To get specific info: 
+   - Customer.objects.all()[0]
+   - Customer.objects.all()[0].username
+   - Customer.objects.all()[0].email
+   
+5. for filter data:
+   - Customer.objects.filter(username='Paras')
+   - Customer.objects.filter(username='naruto', phone='9999999999')
+   - Customer.objects.filter(username__startswith="na")
+   
+6. For changing value through console:
+   - instance = Customer.objects.filter(username='naruto', phone='9999999999')[0]
+   - instance.phone = '9898009898'
+   - instance.save()
+
+7. For add new data:
+   - new = Customer(username='AddedFromConsole', email='console@gmail.com', gender='Male', age='22', phone='9822292356', date_time='2025-01-01 12:27:00')
+   - new.save()
+
+8. To see more like this visit:
+   - making queries django
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

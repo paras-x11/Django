@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- Link to Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            padding-top: 50px;
+        }
+
+        .login-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+            transition: background-color 0.3s;
+        }
+
+        .back-login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-login-link a {
+            color: #007bff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert" style="background-color: cadetblue;">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    <div class="container my-5">
+        <div class="login-container">
+            <h2>Sign Up</h2><br>
+
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                    {{ form.username }}  <!-- Renders the input field for username -->
+                    {% for error in form.username.errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                    {{ form.email }}  <!-- Renders the input field for email -->
+                    {% for error in form.email.errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                    {{ form.password1 }}  <!-- Renders the input field for password -->
+                    {% for error in form.password1.errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                    {{ form.password2 }}  <!-- Renders the input field for password confirmation -->
+                    {% for error in form.password2.errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn-login">Sign Up</button>
+            </form>
+        </div>
+
+        <div class="back-login-link">
+            <p><a href="/login">Back to login</a></p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
