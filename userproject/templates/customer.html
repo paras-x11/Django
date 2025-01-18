@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Customers {% endblock title %}
+
+{% block body %}
+  <div class="container mt-5">
+    <h2 class="my-4 text-center text-white">Customer Form</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group mb-3 row">
+        <label for="username" class="col-sm-3 col-form-label text-white">Username:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Your Username">
+        </div>
+      </div>
+      
+      <div class="form-group mb-3 row">
+        <label for="email" class="col-sm-3 col-form-label text-white">Email:</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Your Email">
+        </div>
+      </div>
+      
+      <div class="form-group mb-3 row">
+        <label for="age" class="col-sm-3 col-form-label text-white">Age:</label>
+        <div class="col-sm-9">
+          <input type="number" class="form-control form-control-sm" id="age" name="age" placeholder="Enter Your Age">
+        </div>
+      </div>
+
+      <div class="form-group mb-3 row">
+        <label for="gender" class="col-sm-3 col-form-label text-white">Gender:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control form-control-sm" id="gender" name="gender" placeholder="Enter Your Gender">
+        </div>
+      </div>
+      
+      <div class="form-group mb-3 row">
+        <label for="phone" class="col-sm-3 col-form-label text-white">Phone:</label>
+        <div class="col-sm-9">
+          <input type="tel" class="form-control form-control-sm" id="phone" name="phone" placeholder="Enter Your Phone No">
+        </div>
+      </div><br>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary btn-sm mb-4 w-25">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <style>
+    body {
+      background-color: #2c3e50;
+    }
+    
+    .container {
+      background-color: #34495e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+      background-color: #34495e;
+      color: white;
+      border: 1px solid #5d6d7e;
+    }
+
+    .form-control:focus {
+      background-color: #2c3e50;
+      color: white;
+      border-color: #3498db;
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+    }
+
+    .text-white {
+      color: white;
+    }
+
+    h2 {
+      font-family: 'Arial', sans-serif;
+    }
+
+    input::placeholder {
+      color: white; /* Change to your desired color */
+      font-style: italic; /* Optional: Style the font */
+  }
+  </style>
+
+{% endblock body %}

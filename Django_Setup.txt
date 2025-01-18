@@ -1,5 +1,3 @@
-for view project structure on terminal: tree /f
-
 -> Scenario: Using Virtual Environment (venv)
 
 1. Create a Virtual Environment:
@@ -51,7 +49,7 @@ Choosing Between Global vs Virtual Environment
 
 -> in your project directory:
    - mkdir static
-   - mkdir template
+   - mkdir templates
 
 --------------------------------------------------------------------------------------------------------
 

@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+
+<!-- Article Text Section -->
+<div class="article-text px-5" style="background-color: cadetblue; text-align: center;"><br><br><br>
+    <h3>1. Tech-World: Embracing Innovation and Connectivity:</h3>
+    <p>
+        In today's fast-paced and ever-evolving digital age, technology has become an integral part of our lives. From the devices we use daily 
+        to groundbreaking advancements that shape industries, the tech landscape is a vibrant ecosystem of innovation, connectivity, and endless 
+        possibilities. Tech-World is your gateway to exploring this exciting realm, where ideas become realities and the future is crafted today.
+    </p><br>
+    
+    <h3>2. The Pulse of Innovation:</h3>
+    <p>
+        At the heart of Tech-World lies a commitment to showcasing the latest technological advancements. Whether it's cutting-edge artificial intelligence, 
+        revolutionary gadgets, or transformative software, Tech-World keeps you updated on the innovations driving progress. With a keen eye on emerging
+        trends, we bridge the gap between complex technologies and everyday understanding, ensuring everyone can be part of the conversation.
+    </p><br>
+ 
+    <h3>3. Final Thoughts:</h3>
+    <p>
+        As we move further into the digital age, the influence of technology on our world will only grow. Tech-World is here to guide you 
+        through this journey, offering insights, inspiration, and a platform to explore the boundless opportunities that lie ahead. Together, 
+        let's embrace innovation, champion connectivity, and shape the future.
+    </p><br><br><br><br>
+</div>
+
+{% endblock body %}
+
+<!-- Add these styles inside a <style> block or an external CSS file -->
+{% block styles %}
+<style>
+    /* General Styles */
+    .article-text {
+        text-align: center;
+        font-family: sans-serif;
+        background-color: cadetblue;
+        padding: 40px;
+        border-radius: 8px;
+        margin: 20px;
+        color: white;
+    }
+
+    .article-text h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .article-text p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Media Query for Tablet and Smaller Screens */
+    @media (max-width: 768px) {
+        .article-text {
+            padding: 20px;
+        }
+
+        .article-text h3 {
+            font-size: 1.6rem;
+        }
+
+        .article-text p {
+            font-size: 1rem;
+        }
+    }
+
+    /* Media Query for Mobile Screens */
+    @media (max-width: 480px) {
+        .article-text {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .article-text h3 {
+            font-size: 1.4rem;
+        }
+
+        .article-text p {
+            font-size: 0.95rem;
+        }
+    }
+
+</style>
+{% endblock styles %}

@@ -9,6 +9,7 @@ from django.contrib import messages
 from home.models import *
 from home.forms import SignupForm
 from home.forms import LoginForm
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -69,3 +70,38 @@ def signup_user(request):
         form = SignupForm()
 
     return render(request, 'signup.html', {'form': form})
+
+def customer(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        phone = request.POST.get('phone')
+
+        if not username or not email or not age or not gender or not phone:
+            messages.error(request, "Fill all the details")
+        else:
+            Customer.objects.create(username=username, email=email, age=age, gender=gender, phone=phone, date_time=datetime.now())
+            messages.success(request, "Details stored successfully.")
+    return render(request, "customer.html")
+
+def contact(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        desc = request.POST.get('desc')
+
+        if not name or not email or not phone or not desc:
+            messages.error(request, "Fill all the details")
+        else:
+            Contact.objects.create(name=name, email=email, phone=phone, desc=desc, date_time=datetime.now())
+            messages.success(request, "Details stored successfully.")
+    return render(request, "contact.html")
