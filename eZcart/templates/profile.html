@@ -82,12 +82,12 @@
             </div>
         
             <div class="text-data">
-              <span class="name" id="profile-name">{{ request.user.username}}</span>
+              <span class="name" id="profile-name">{{ request.user.username }}</span>
             </div>
         
             <div class="details">
               <ul>
-                <li><i class="fas fa-envelope"></i> <span id="profile-email">{{ request.user.email}}</span></li>
+                <li><i class="fas fa-envelope"></i> <span id="profile-email">{{ request.user.email }}</span></li>
                 <li><i class="fas fa-phone"></i> +1 555-555-5555</li>
                 <li><i class="fas fa-link"></i> www.support@ezcart.com</li>
                 <li><i class="fas fa-map"></i> 123 Main Street, Anytown, USA</li>
@@ -100,8 +100,12 @@
               <a href="#" style="background: #e1306c" class="link"><i class="fa fa-instagram"></i></a>
               <a href="#" style="background: #ff0000" class="link"><i class="fa fa-youtube"></i></a>
             </div>
+        
+            <!-- Edit Profile Button -->
+            <button class="profile-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
           </div>
         </div>
+        
         
         
 
@@ -138,19 +142,18 @@
           <div id="address" class="content-section" style="display: none;">
             <h4>Address Book</h4>
             <ul class="list-group">
-              <li class="list-group-item">
-                <strong>Home Address</strong><br>
-                1234 Main St, Springfield, IL 
-                <div class="d-flex justify-content-end mt-2">
-                  <button class="btn btn-warning btn-sm me-2" onclick="editAddress(this)">Edit</button>
-                  <button class="btn btn-danger btn-sm" onclick="deleteAddress(this)">Delete</button>
-                </div>
-                
-              </li>
+                <li class="list-group-item">
+                    <strong>Home Address</strong><br>
+                    1234 Main St, Springfield, IL
+                    <div class="btn-container">
+                        <button class="btn btn-warning btn-sm" onclick="editAddress(this)">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteAddress(this)">Delete</button>
+                    </div>
+                </li>
             </ul>
-            <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add New
-              Address</button>
-          </div>
+            <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add New Address</button>
+        </div>
+        
 
           <div id="settings" class="content-section" style="display: none;">
             <h4>Account Settings</h4>
