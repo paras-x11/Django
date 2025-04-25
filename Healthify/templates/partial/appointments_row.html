@@ -1,0 +1,73 @@
+
+    {% if not appointments %}
+        <tr>
+            {% if message %}
+                <td class="text-red-400 bg-red-100 p-2 text-center rounded mb-4">
+                    {{ message }}
+                </td>
+            {% else%}
+                <td colspan="8" class="text-center"> No Appointments </td>
+            {% endif %}
+        </tr>
+
+    {% else %}
+        {% for a in appointments %}
+        <tr>
+            {% if request.user.is_superuser%}
+                <td>
+                    {% if a.patient.patient_image %}
+                        <img src="{{ a.patient.patient_image.url }}" class="patient-img" alt="Patient Image">
+                    {% else %}
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" class="patient-img" alt="No Image">
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'appointment_detail' a.id %}">xyz-{{ a.id }}</a></td>
+                <td>{{ a.patient.full_name }}</td>
+                <td>{{ a.doctor.full_name }}</td>
+            {% endif %}
+            
+            {% if request.user.is_doctor%}
+                <td>
+                    {% if a.patient.patient_image %}
+                        <img src="{{ a.patient.patient_image.url }}" class="patient-img" alt="Patient Image">
+                    {% else %}
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" class="patient-img" alt="No Image">
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'appointment_detail' a.id %}">xyz-{{ a.id }}</a></td>
+                <td>{{ a.patient.full_name }}</td>
+                <td>{{ a.patient.age }}</td>
+                <td>{{ a.patient.phone }}</td>
+            {% endif %}
+
+            {% if request.user.is_patient %}
+                <td>
+                    {% if a.doctor.doctor_image %}
+                        <img src="{{ a.doctor.doctor_image.url }}" class="patient-img" alt="Doctor Image">
+                    {% else %}
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" class="patient-img" alt="No Image">
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'appointment_detail' a.id %}">xyz-{{ a.id }}</a></td>
+                <td>{{ a.doctor.full_name }}</td>
+                <td>{{ a.doctor.phone }}</td>
+            {% endif %}
+        
+            <td>{{ a.doctor.clinic_address }}</td>
+
+            <td>{{ a.date|date:"M d, Y" }} {{ a.time|time:"H:i A" }}</td>
+            
+            {% if a.status == "Pending" %}
+                <td><span class="badge-pending">PENDING</span></td>
+            {% elif a.status == "Approved" %}
+                <td><span class="badge-approved">APPROVED</span></td>
+            {% elif a.status == "Rejected" %}
+                <td><span class="badge-rejected">REJECTED</span></td>
+            {% elif a.status == "Completed" %}
+                <td><span class="badge-completed">COMPLETED</span></td>
+            {% else %}
+                <td><span class="badge-rejected">Unknown</span></td>        
+            {% endif %}
+        </tr>
+        {% endfor %}
+    {% endif %}

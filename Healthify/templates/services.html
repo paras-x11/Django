@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block title %} Healthify - Services {% endblock title %}
+
+{% block body %}
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Our Medical Services</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb text-uppercase mb-0">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Services</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Service Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <p class="d-inline-block border rounded-pill py-1 px-4">Our Expertise</p>
+                <h1>Health Care Solutions at Healthify</h1>
+            </div>
+            <div class="row g-4">
+                <!-- Cardiology Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-heartbeat text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Cardiology</h4>
+                        <p class="mb-4">Our expert cardiologists are dedicated to diagnosing and treating heart-related conditions. From routine check-ups to complex heart surgeries, we provide comprehensive care for your heart health.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#cardiologyModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+
+                <!-- Pulmonary Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-x-ray text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Pulmonary Care</h4>
+                        <p class="mb-4">Our pulmonologists specialize in the diagnosis and treatment of respiratory disorders such as asthma, bronchitis, and lung disease. We offer comprehensive pulmonary health services for better breathing.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#pulmonaryModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+
+                <!-- Neurology Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-brain text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Neurology</h4>
+                        <p class="mb-4">Our neurology services cover the diagnosis and treatment of neurological conditions, such as stroke, epilepsy, Parkinson’s disease, and other brain and spinal cord disorders. We offer state-of-the-art treatments for neurological health.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#neurologyModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+
+                <!-- Orthopedics Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-wheelchair text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Orthopedics</h4>
+                        <p class="mb-4">Our orthopedic specialists provide care for bone, joint, and muscle-related problems. From sports injuries to surgical interventions, we ensure you receive the highest level of treatment to improve mobility and reduce pain.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#orthopedicsModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+
+                <!-- Dental Surgery Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-tooth text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Dental Surgery</h4>
+                        <p class="mb-4">Our dental experts provide a full range of dental services, including preventative care, restorative treatments, and dental surgeries. We are committed to ensuring you have a healthy and beautiful smile.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#dentalModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+
+                <!-- Laboratory Section -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item bg-light rounded h-100 p-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                            <i class="fa fa-vials text-primary fs-4"></i>
+                        </div>
+                        <h4 class="mb-3">Laboratory Services</h4>
+                        <p class="mb-4">Our in-house laboratory provides diagnostic testing, from blood work to imaging services. With fast, accurate results, we ensure our medical professionals have the information they need to provide you with the best care.</p>
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#laboratoryModal"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+    <!-- Testimonial Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <p class="d-inline-block border rounded-pill py-1 px-4">Patient Testimonials</p>
+                <h1>What Our Patients Have to Say</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"Healthify’s doctors and staff were amazing. They made me feel comfortable and took the time to listen to my concerns. I highly recommend them!"</p>
+                        <h5 class="mb-1">Sakura Haruno</h5>
+                        <span class="fst-italic">Engineer</span>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-2.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"The team at Healthify provided top-notch care during my surgery. I felt safe, informed, and well cared for every step of the way."</p>
+                        <h5 class="mb-1">Jane Smith</h5>
+                        <span class="fst-italic">Teacher</span>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-3.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"I received excellent service from the Healthify lab team. The results were fast, and I felt confident in their expertise. Thank you!"</p>
+                        <h5 class="mb-1">Mark Johnson</h5>
+                        <span class="fst-italic">Businessman</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+    <!-- Modals -->
+
+    <!-- Cardiology Modal -->
+    <div class="modal fade" id="cardiologyModal" tabindex="-1" role="dialog" aria-labelledby="cardiologyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-heartbeat text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="cardiologyModalLabel">Cardiology - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our cardiologists are experts in diagnosing and treating a wide range of heart diseases. From preventive care and diagnostics to complex surgeries, we provide a holistic approach to managing heart health.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Routine heart check-ups</li>
+                        <li>Cardiac surgeries</li>
+                        <li>Blood pressure management</li>
+                        <li>Advanced imaging and diagnostics</li>
+                    </ul>
+                    <p>Your heart health is our priority. Schedule an appointment today!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pulmonary Modal -->
+    <div class="modal fade" id="pulmonaryModal" tabindex="-1" role="dialog" aria-labelledby="pulmonaryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-stethoscope text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="pulmonaryModalLabel">Pulmonary Care - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our pulmonology team is dedicated to providing expert care for respiratory conditions, such as asthma, COPD, and lung infections. We offer advanced treatments and support for chronic lung diseases.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Asthma and allergy management</li>
+                        <li>Lung cancer screening</li>
+                        <li>Pulmonary rehabilitation</li>
+                        <li>Advanced respiratory care</li>
+                    </ul>
+                    <p>Contact us to improve your respiratory health and quality of life.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Neurology Modal -->
+    <div class="modal fade" id="neurologyModal" tabindex="-1" role="dialog" aria-labelledby="neurologyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-brain text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="neurologyModalLabel">Neurology - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our neurology department offers comprehensive services for conditions of the brain and nervous system. From stroke care to epilepsy management, our specialists provide personalized treatment plans for your neurological health.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Brain scans and diagnostic imaging</li>
+                        <li>Epilepsy treatment</li>
+                        <li>Parkinson's disease management</li>
+                        <li>Stroke rehabilitation</li>
+                    </ul>
+                    <p>Get in touch with us to take control of your brain health.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orthopedics Modal -->
+    <div class="modal fade" id="orthopedicsModal" tabindex="-1" role="dialog" aria-labelledby="orthopedicsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-bone text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="orthopedicsModalLabel">Orthopedic Services - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our orthopedic team specializes in treating musculoskeletal conditions and providing surgical and non-surgical treatments to restore mobility. Whether it’s for sports injuries or degenerative conditions, we provide personalized care plans for optimal outcomes.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Joint replacements</li>
+                        <li>Sports injury care</li>
+                        <li>Spinal care</li>
+                        <li>Physical therapy and rehabilitation</li>
+                    </ul>
+                    <p>Contact us to learn more about our orthopedic services and improve your movement and quality of life.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dental Surgery Modal -->
+    <div class="modal fade" id="dentalModal" tabindex="-1" role="dialog" aria-labelledby="dentalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-tooth text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="dentalModalLabel">Dental Surgery - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our dental surgeons provide comprehensive care for oral health, including routine check-ups, surgical procedures, and cosmetic treatments. Whether you need a dental implant or a simple cleaning, we’re here to help.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Dental implants</li>
+                        <li>Teeth whitening</li>
+                        <li>Oral surgery</li>
+                        <li>Preventive care</li>
+                    </ul>
+                    <p>Book your appointment today to improve your smile!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laboratory Modal -->
+    <div class="modal fade" id="laboratoryModal" tabindex="-1" role="dialog" aria-labelledby="laboratoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-vials text-primary me-2" style="font-size: 24px;"></i>
+                        <h5 class="modal-title" id="laboratoryModalLabel">Laboratory Services - Healthify</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Our laboratory offers a wide range of diagnostic tests to assist in the diagnosis and treatment of various health conditions. From routine blood tests to advanced imaging, our lab provides quick and reliable results for better health management.</p>
+                    <p>We offer services like:</p>
+                    <ul>
+                        <li>Blood tests</li>
+                        <li>Imaging services</li>
+                        <li>Urine and stool analysis</li>
+                        <li>Advanced diagnostics</li>
+                    </ul>
+                    <p>Get your tests done today for a healthier tomorrow.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

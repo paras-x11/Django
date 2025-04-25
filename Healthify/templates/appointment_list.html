@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Appointment List{% endblock title %}
+
+{% block css %}
+    <style>
+        .appointment_list {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f8ff;
+            padding: 40px;
+        }
+
+        .card-custom {
+            border: 2px solid #00c6ff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            background-color: #fff;
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-tabs-custom .nav-link {
+            border: none;
+            color: #777;
+            font-weight: 600;
+        }
+
+        .nav-tabs-custom .nav-link.active {
+            color: #00c6ff;
+            border-bottom: 2px solid #00c6ff;
+        }
+
+        .table-custom th {
+            color: #666;
+            font-weight: 600;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table-custom td {
+            vertical-align: middle;
+        }
+
+        .patient-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .badge-approved {
+            background-color: #e8fff3;
+            color: #28a745;
+            border: 1px solid #28a745;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 550;
+        }
+        
+        .badge-pending {
+            background-color: #fff6e8;
+            color: #fd7e14;
+            border: 1px solid #fd7e14;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 550;
+        }
+        
+        .badge-rejected {
+            background-color: #f8d7da;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 550;
+        }
+        
+        .badge-completed {
+            background-color: #e0f7ff;
+            color: #007bff;
+            border: 1px solid #007bff;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 550;
+        }
+        
+        .dots {
+            cursor: pointer;
+        }
+
+        .dots::after {
+            content: '\f142';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+    </style>
+{% endblock css %}
+
+
+{% block body %}
+<div class="appointment_list">
+<div class="card card-custom">
+    <div class="card-header-custom">
+        <h6 class="mb-0"><strong>Appointment</strong> List</h6>
+        <i class="fas fa-ellipsis-v"></i>
+    </div>
+    <ul class="nav nav-tabs nav-tabs-custom px-3 pt-2" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" onclick="getAppointmentByStatus('')">All</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" onclick="getAppointmentByStatus('Pending')">Pending</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" onclick="getAppointmentByStatus('Approved')">Approved</button>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" onclick="getAppointmentByStatus('Rejected')">Rejected</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" onclick="getAppointmentByStatus('Completed')">Completed</a>
+        </li>
+    </ul>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-custom align-middle">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Appointment ID</th>
+                    {% if request.user.is_superuser %}
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                    {% elif request.user.is_patient %}
+                        <th>Doctor Name</th>
+                        <th>Number</th>
+                    {% elif request.user.is_doctor %}
+                        <th>Patient Name</th>
+                        <th>Age</th>
+                        <th>Number</th>
+                    {% endif %}
+                    <th>Appointment Address</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="appointment-data">
+           
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>    
+
+<script>
+    
+    $(document).ready(function(){
+        getAppointmentByStatus('')
+    })
+
+    const getAppointmentByStatus = (status) => {
+        if (status == undefined || status == null || status == '') {
+            status = 'All';
+        }
+        
+        console.log("status: " + status);
+
+        $.get(`get_appointments/${status}`  , function(data){
+            // console.log(data)
+            $('#appointment-data').html(data);
+
+        })
+    }
+
+</script>
+{% endblock body %}

@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User Profile{% endblock title %}
+
+{% block css %}
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    .profile_body {
+        background-color: #f9fafe;
+        padding: 40px 0;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .profile-header {
+        background: linear-gradient(to right, #007bff, #00c6ff);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border-radius: 10px;
+    }
+
+    .form-control {
+        margin-top: 5px;
+    }
+
+    .profile-img {
+        max-width: 100px;
+        border-radius: 50%;
+        border: 2px solid #007bff;
+    }
+
+    .btn-group-custom {
+        margin-top: 30px;
+    }
+
+    .list-group-item {
+        background-color: #fff;
+        padding: 15px 20px;
+        font-size: 15px;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="profile_body">
+    <div class="container">
+        <div class="profile-header">
+            <h1 id="userFullName">{{ user_data.firstName }} {{ user_data.lastName }}</h1>
+            <p id="userRole"><i class="fas fa-user-tag me-2"></i>{{ user_data.role }}</p>
+        </div>
+
+        <div class="row profile-content">
+            <!-- Basic Info -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-user-circle me-2"></i>Basic Information
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Email:</strong>
+                            <span id="userEmail">{{ user_data.email }}</span>
+                            <input type="email" id="inputEmail" class="form-control d-none" value="{{ user_data.email }}">
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Phone:</strong>
+                            <span id="userPhone">{{ user_data.phone }}</span>
+                            <input type="text" id="inputPhone" class="form-control d-none" value="{{ user_data.phone }}">
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Address:</strong>
+                            <span id="userAddress">{{ user_data.address|default:"-" }}</span>
+                            <input type="text" id="inputAddress" class="form-control d-none" value="{{ user_data.address }}">
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Profile Picture:</strong><br>
+                            <div id="userImage" class="mb-2">
+                                {% if user_data.image %}
+                                    <img src="{{ user_data.image }}" alt="Profile Image" class="profile-img" id="previewImage">
+                                {% else %}
+                                    <img src="{% static 'img/default-avatar.jpg' %}" alt="Default" class="profile-img" id="previewImage">
+                                {% endif %}
+                            </div>
+                            <input type="file" id="inputImage" class="form-control d-none" accept="image/*">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Role Specific Info -->
+            <div class="col-md-6 mb-4">
+                {% if user_data.role == 'Doctor' %}
+                    <div class="card">
+                        <div class="card-header bg-primary text-white"><i class="fas fa-user-md me-2"></i>Doctor Info</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>First Name:</strong>
+                                <span id="userFirstName">{{ user_data.firstName }}</span>
+                                <input id="inputFirstName" class="form-control d-none" value="{{ user_data.firstName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Last Name:</strong>
+                                <span id="userLastName">{{ user_data.lastName }}</span>
+                                <input id="inputLastName" class="form-control d-none" value="{{ user_data.lastName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Department:</strong>
+                                <span id="userDepartment">{{ user_data.department }}</span>
+                                <select id="inputDepartment" class="form-control d-none" name="department">
+                                    {% for dept in departments %}
+                                    <option value="{{ dept.id }}" {% if dept.id == user_data.department.id %}selected{% endif %}>
+                                        {{ dept.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li class="list-group-item"><strong>Specialization:</strong>
+                                <span id="userSpecialization">{{ user_data.specialization }}</span>
+                                <input id="inputSpecialization" class="form-control d-none" value="{{ user_data.specialization }}">
+                            </li>
+                            <li class="list-group-item"><strong>Gender:</strong>
+                                <span id="userGender">{{ user_data.gender }}</span>
+                                <input id="inputGender" class="form-control d-none" value="{{ user_data.gender }}">
+                            </li>
+                            <li class="list-group-item"><strong>Bio:</strong>
+                                <span id="userBio">{{ user_data.bio }}</span>
+                                <textarea id="inputBio" class="form-control d-none">{{ user_data.bio }}</textarea>
+                            </li>
+                            <li class="list-group-item"><strong>Clinic Name:</strong>
+                                <span id="userClinicName">{{ user_data.clinicName }}</span>
+                                <input id="inputClinicName" class="form-control d-none" value="{{ user_data.clinicName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Clinic Address:</strong>
+                                <span id="userClinicAddress">{{ user_data.clinicAddress }}</span>
+                                <input id="inputClinicAddress" class="form-control d-none" value="{{ user_data.clinicAddress }}">
+                            </li>
+                        </ul>
+                    </div>
+                {% elif user_data.role == 'Patient' %}
+                    <div class="card">
+                        <div class="card-header bg-primary text-white"><i class="fas fa-user-injured me-2"></i>Patient Info</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>First Name:</strong>
+                                <span id="userFirstName">{{ user_data.firstName }}</span>
+                                <input id="inputFirstName" class="form-control d-none" value="{{ user_data.firstName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Last Name:</strong>
+                                <span id="userLastName">{{ user_data.lastName }}</span>
+                                <input id="inputLastName" class="form-control d-none" value="{{ user_data.lastName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Age:</strong>
+                                <span id="userAge">{{ user_data.age }}</span>
+                                <input type="number" id="inputAge" class="form-control d-none" value="{{ user_data.age }}">
+                            </li>
+                            <li class="list-group-item"><strong>Gender:</strong>
+                                <span id="userGender">{{ user_data.gender }}</span>
+                                <input id="inputGender" class="form-control d-none" value="{{ user_data.gender }}">
+                            </li>
+                        </ul>
+                    </div>
+                {% elif user_data.role == 'Superuser' %}
+                    <div class="card">
+                        <div class="card-header bg-dark text-white"><i class="fas fa-user-shield me-2"></i>Admin Info</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>First Name:</strong>
+                                <span id="userFirstName">{{ user_data.firstName }}</span>
+                                <input id="inputFirstName" class="form-control d-none" value="{{ user_data.firstName }}">
+                            </li>
+                            <li class="list-group-item"><strong>Last Name:</strong>
+                                <span id="userLastName">{{ user_data.lastName }}</span>
+                                <input id="inputLastName" class="form-control d-none" value="{{ user_data.lastName }}">
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center btn-group-custom">
+            <!-- CSRF token for JS -->
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        
+            <button class="btn btn-outline-primary me-2" id="editProfileBtn">
+                <i class="fas fa-edit me-1"></i>Edit Profile
+            </button>
+            <button class="btn btn-success d-none me-2" id="saveProfileBtn">
+                <i class="fas fa-save me-1"></i>Save
+            </button>
+            <a href="{% url 'logout' %}" class="btn btn-secondary">
+                <i class="fas fa-sign-out-alt me-1"></i>Logout_
+            </a>
+        </div>
+        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- JS Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editableFields = [
+                "Email", "Phone", "Address", "FirstName", "LastName", 
+                "Department", "Specialization", "Gender", "Bio", "ClinicName", "ClinicAddress", "Age"
+            ];
+
+            const previewImage = document.getElementById("previewImage");
+            const inputImage = document.getElementById("inputImage");
+
+            // Image preview
+            inputImage.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.classList.remove("d-none");
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById("editProfileBtn").addEventListener("click", function () {
+                this.classList.add("d-none");
+                document.getElementById("saveProfileBtn").classList.remove("d-none");
+
+                editableFields.forEach(field => {
+                    let viewEl = document.getElementById("user" + field);
+                    let inputEl = document.getElementById("input" + field);
+                    if (viewEl && inputEl) {
+                        viewEl.classList.add("d-none");
+                        inputEl.classList.remove("d-none");
+                    }
+                });
+
+                document.getElementById("userImage").classList.add("d-none");
+                inputImage.classList.remove("d-none");
+            });
+
+            document.getElementById("saveProfileBtn").addEventListener("click", function () {
+                const formData = new FormData();
+                formData.append("csrfmiddlewaretoken", document.getElementsByName("csrfmiddlewaretoken")[0].value);
+
+                editableFields.forEach(field => {
+                    let inputEl = document.getElementById("input" + field);
+                    if (inputEl) {
+                        formData.append(field.toLowerCase(), inputEl.value);
+                    }
+                });
+
+                const imageFile = inputImage.files[0];
+                if (imageFile) {
+                    formData.append("profile_image", imageFile);
+                }
+
+                $.ajax({
+                    url: "{% url 'update_profile' %}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.status === "ok") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Profile Updated',
+                                text: '✅ Your profile was updated successfully!',
+                                confirmButtonColor: '#3085d6'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Update Failed',
+                                text: '❌ Something went wrong. Please try again.',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</div>
+{% endblock body %}

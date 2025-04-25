@@ -1,0 +1,236 @@
+.appointment_detail_body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0px;
+    background: #f0f8ff;
+    /* Do not change */
+}
+
+.ap_header {
+    background-color: #0077b6;
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+}
+
+.ap_header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+.ap_container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+    border-left: 4px solid #0077b6;
+    padding-left: 14px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0077b6;
+    background-color: #e6f4fa;
+    padding: 10px 14px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 119, 182, 0.05);
+}
+
+.info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.info-card {
+    flex: 1 1 300px;
+    padding: 20px 24px;
+    background: #ffffff;
+    border-left: 5px solid #00b4d8;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+}
+
+.info-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+    color: #023047;
+    border-bottom: 1px solid #e0f0ff;
+    padding-bottom: 6px;
+}
+
+.info-card p {
+    margin: 8px 0;
+    color: #495057;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Optional: if you want bold static text in <p> tags */
+.ap-info-bold {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+
+.contact-form {
+    margin-top: 30px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    background-color: #0096c7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #0077b6;
+}
+
+.badge-approved {
+    background-color: #e8fff3;
+    color: #28a745;
+    border: 1px solid #28a745;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 550;
+}
+
+.badge-pending {
+    background-color: #fff6e8;
+    color: #fd7e14;
+    border: 1px solid #fd7e14;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 550;
+}
+
+.badge-rejected {
+    background-color: #f8d7da;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 550;
+}
+
+.badge-completed {
+    background-color: #e0f7ff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 550;
+}
+
+
+/* Enhanced style for 'What to Expect' section */
+.expect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.expect-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0f0ff;
+    position: relative;
+}
+
+.expect-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 123, 255, 0.1);
+}
+
+.expect-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: #005f73;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.expect-card p {
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.6;
+}
+
+.expect-icon {
+    font-size: 1.4rem;
+    color: #0077b6;
+}
+
+.status-form {
+    margin-top: 20px;
+}
+
+.status-form select {
+    padding: 8px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.status-form button {
+    background-color: #0077b6;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .info-grid {
+        flex-direction: column;
+    }
+
+    .ap_header h1 {
+        font-size: 1.6rem;
+    }
+
+    .expect-card {
+        padding: 20px;
+    }
+}

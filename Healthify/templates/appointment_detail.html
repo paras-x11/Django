@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Appointment Detail{% endblock title %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/appointment_detail.css' %}">
+{% endblock links %}
+
+{% block body %}
+<div class="appointment_detail_body">
+    <div class="ap_header">
+        <h1>Appointment Detail</h1>
+    </div>
+
+    {% if message %}
+        <div class="text-red-400 bg-red-100 p-2 text-center rounded mb-4">
+            {{ message }}
+        </div>
+    {% endif %}
+    <div class="ap_container">
+        <div class="section-title">Welcome to Healthify</div>
+        <p>Thank you for choosing us! Here's all the essential information related to your appointment.</p>
+
+        <div class="section-title">Clinic Info</div>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Opening Hours</h3>
+                <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
+                <p>Sat: 9:00 AM - 2:00 PM</p>
+                <p>Sun: Closed</p>
+            </div>
+            <div class="info-card">
+                <h3>Doctor Assigned</h3>
+                <p>Name: {{ appointment.doctor }}</p>
+                <p>Department: {{appointment.doctor.department }}</p>
+                <p>Contact: {{appointment.doctor.phone }}</p>
+            </div>
+            <div class="info-card">
+                <h3>Appointment Info</h3>
+                <p>Date & Time: {{ appointment.date }}, {{ appointment.time }}</p>
+                {% if appointment.status == "Pending" %}
+                    <p>Status:&nbsp; <span id="status-badge-{{ appointment.id }}" class="badge-pending">PENDING</span></p>
+                {% elif appointment.status == "Approved" %}
+                    <p>Status:&nbsp; <span id="status-badge-{{ appointment.id }}" class="badge-approved">APPROVED</span></p>
+                {% elif appointment.status == "Rejected" %}
+                    <p>Status:&nbsp; <span id="status-badge-{{ appointment.id }}" class="badge-rejected">REJECTED</span></p>
+                {% elif appointment.status == "Completed" %}
+                    <p>Status:&nbsp; <span id="status-badge-{{ appointment.id }}" class="badge-completed">Completed</span></p>
+                {% else %}
+                    <p>Status:&nbsp; <span id="status-badge-{{ appointment.id }}" class="badge-rejected">Unknown</span></p>
+                {% endif %}
+                <p>Location:&nbsp; {{ appointment.doctor.clinic_address }}</p>
+            </div>
+        </div><br>
+        
+        {% if appointment.status != "Rejected" and appointment.status != "Completed"%}
+            {% if request.user.is_doctor or request.user.is_superuser %}
+                <div class="section-title">Update Appointment Status</div>
+                <form class="status-form" method="post">
+                    {% csrf_token %}
+                    <label for="status">Change Status:</label>
+                    <select name="status" id="status-{{ a_id }}">
+                        {% if appointment.status == "Pending" %}
+                            <option disabled selected>Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        {% elif appointment.status == "Approved" %}
+                            <option disabled selected>Approved</option>
+                            <option value="Completed">Completed</option>
+                        {% endif %}
+                    </select>
+
+                    <button type="button" id="updateStatus" onclick="update_status('{{appointment.id}}')">Update</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    
+
+        {% if request.user.is_patient %}
+            <div class="section-title">Books & Records</div>
+            <p>Patient files and health records will be accessible during the appointment. Please carry your ID proof and insurance card.</p>
+                
+            <div class="section-title">What to Expect</div>
+            <div class="expect-grid">
+                <div class="expect-card">
+                    <h3><i class="fas fa-clock expect-icon"></i> Before Your Visit</h3>
+                    <p>Please arrive 10–15 minutes early for check-in and bring a valid ID, insurance card, and previous medical records if any.</p>
+                </div>
+                <div class="expect-card">
+                    <h3><i class="fas fa-user-md expect-icon"></i> During Your Appointment</h3>
+                    <p>Our doctor will review your health concerns, examine you, and may suggest tests or further treatments based on the findings.</p>
+                </div>
+                <div class="expect-card">
+                    <h3><i class="fas fa-file-medical expect-icon"></i> After Your Appointment</h3>
+                    <p>You’ll receive follow-up instructions or prescriptions if needed. You can access reports through the patient portal or in person.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script>
+    
+    function update_status(a_id){
+        $(".updateStatus").on("click", function(e) {
+            e.preventDefault(); // 🔥 e is automatically passed by jQuery
+        });
+        const status = document.getElementById("status-"+a_id).value
+
+        const csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+        $.post("{% url 'update_status' %}", {csrfmiddlewaretoken, a_id, status}, function(rt){
+            const statusText = rt.a_status.toUpperCase();
+
+            // Badge class mapping
+            const badgeClasses = {
+                "Pending": "badge-pending",
+                "Approved": "badge-approved",
+                "Rejected": "badge-rejected",
+                "Completed": "badge-completed"
+            };
+
+            // Update badge in DOM
+            const badgeSpan = document.getElementById("status-badge-" + a_id);
+            badgeSpan.className = badgeClasses[rt.a_status];
+            badgeSpan.innerText = statusText;
+            location.reload();
+        });
+    }
+</script>
+{% endblock js %}

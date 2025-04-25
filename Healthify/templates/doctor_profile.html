@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Profile{% endblock title %}
+
+{% block css %}
+  <style>
+    .profile_body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    } 
+
+    .profile_container {
+      padding: 40px 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Doctor Image */
+    .doctor-img {
+      width: 180px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 3px solid #e9ecef;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      font-weight: 700;
+      color: #333;
+    }
+
+    .badge {
+      font-size: 0.9rem;
+      padding: 0.5em 0.75em;
+      border-radius: 20px;
+    }
+
+    .text-muted {
+      font-size: 0.95rem;
+      color: #6c757d !important;
+    }
+
+    .btn {
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 30px;
+      padding: 6px 18px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-outline-secondary:hover,
+    .btn-outline-danger:hover {
+      transform: scale(1.05);
+    }
+
+    .btn i {
+      margin-right: 6px;
+    }
+
+    /* Tabs Section */
+    .nav-tabs {
+      border-bottom: 2px solid #dee2e6;
+      background-color: #f9f9f9;
+      border-radius: 10px 10px 0 0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .nav-tabs .nav-link {
+      color: #495057;
+      padding: 12px 25px;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .nav-tabs .nav-link:hover {
+      background-color: #e9ecef;
+      color: #007bff;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #007bff;
+      color: #fff !important;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      background-color: #ffffff;
+      padding: 30px;
+      border: 1px solid #dee2e6;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .tab-pane h5 {
+      color: #007bff;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .tab-pane p,
+    .tab-pane ul {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .tab-pane ul {
+      padding-left: 20px;
+    }
+
+    .tab-pane ul li {
+      margin-bottom: 8px;
+    }
+
+    /* Responsive doctor card */
+    @media (max-width: 768px) {
+      .doctor-img {
+        width: 120px;
+        height: 140px;
+      }
+
+      .profile_container {
+        padding: 20px 10px;
+      }
+
+      .nav-tabs .nav-link {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+{% endblock css %}
+
+
+
+{% block body %}
+<div class="profile_body">
+<div class="profile_container mt-5 mb-4">
+  <div class="row g-4 align-items-center">
+    <div class="col-md-2 text-center">
+      {% if doctor.doctor_image %}
+        <img src="{{ doctor.doctor_image.url }}" class="doctor-img mx-auto" alt="Doctor Image">
+      {% else %}
+        <img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" class="doctor-img mx-auto" alt="Default Doctor Image">
+      {% endif %}
+    </div>
+
+    <div class="col-md-7">
+      <h3 class="mb-1 fw-bold">{{ doctor.full_name|default:"Dr. John Doe" }}</h3>
+
+      <p class="mb-2">
+        <span class="badge bg-primary">{{ doctor.specialization|default:"General Physician" }}</span>
+        <span class="badge bg-info text-dark ms-2">Department: {{ doctor.department|default:"General Medicine" }}</span>
+      </p>
+
+      <p class="text-muted mb-3" style="line-height: 1.6;">
+        {{ doctor.bio|default:"Passionate about providing quality healthcare and ensuring patient satisfaction." }}
+      </p>
+
+      <div class="mb-3">
+        <strong>{{ doctor.clinic_name|default:"Global Health Clinic" }}</strong><br>
+        <small class="text-muted">{{ doctor.clinic_address|default:"123 Main Street, YourCity, Country" }}</small>
+      </div>
+
+      <a href="{% url 'doctor_profile' doctor.id %}" class="btn btn-success btn-sm mt-2">
+        <i class="fas fa-calendar-check me-1"></i> Book Appointment
+      </a>
+    </div>
+
+    <div class="col-md-3 text-center">
+      <button class="btn btn-outline-danger mb-2">
+        <i class="fas fa-phone-alt me-2"></i>+91 {{ doctor.phone|default:"0000000000" }}
+      </button>
+      <div>
+        <button class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-star"></i> Review</button>
+        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-heart"></i> Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mt-4" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview">Overview</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#experience">Experience</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#insurance">Insurance</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ratings">Ratings</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#about">About Me</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#location">Locations</button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content p-3 border border-top-0 rounded-bottom shadow-sm" id="profileTabContent">
+    <div class="tab-pane fade show active" id="overview">
+      <h5>Overview</h5>
+      <p>This doctor specializes in general and cosmetic {{ doctor.specialization|default:"medicine" }}. Experienced in patient care and oral health improvement.</p>
+    </div>
+    <div class="tab-pane fade" id="experience">
+      <h5>Experience</h5>
+      <p>Practicing for over 10 years in various {{ doctor.specialization|default:"medical" }} institutions.</p>
+    </div>
+    <div class="tab-pane fade" id="insurance">
+      <h5>Insurance Accepted</h5>
+      <ul>
+        <li>Delta Dental</li>
+        <li>MetLife</li>
+        <li>UnitedHealthcare</li>
+      </ul>
+    </div>
+    <div class="tab-pane fade" id="ratings">
+      <h5>Ratings & Reviews</h5>
+      <p>No reviews yet. Be the first to leave a review.</p>
+    </div>
+    <div class="tab-pane fade" id="about">
+      <h5>About Me</h5>
+      <p>Enthusiastic about helping patients with their {{ doctor.specialization|default:"health" }} and ensuring a comfortable treatment experience.</p>
+    </div>
+    <div class="tab-pane fade" id="location">
+      <h5>Clinic Location</h5>
+      <p>{{ doctor.clinic_name|default:"Global Health Clinic" }}, {{ doctor.clinic_address|default:"123 Main Street, YourCity, Country" }}</p>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock body %}
