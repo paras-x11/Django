@@ -1,0 +1,189 @@
+<!-- profile.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile | Digital Society{% endblock %}
+
+{% block style %}
+<style>
+  /* Profile Card Styling */
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+    width: 100%;
+    background: #fff;
+    padding: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .profile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 36%;
+    width: 100%;
+    background-color: #343a40;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  /* Profile Image */
+  .profile-card .image {
+    position: relative;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-color: #4070f4;
+    padding: 4px;
+    margin-top: 15px;
+  }
+
+  .profile-card .image .profile-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+  }
+
+  /* Profile Info */
+  .profile-card .text-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    margin-top: 15px;
+  }
+
+  .profile-card .text-data .name {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .profile-card .text-data .email {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
+
+  /* Edit Profile Button */
+  .profile-card .profile-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #343a40;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .profile-card .profile-btn:hover {
+    background-color: #232526;
+  }
+
+  /* Edit Profile Modal */
+  #editProfileModal .modal-header {
+    background-color: #343a40;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  #editProfileModal .modal-body {
+    background-color: #f8f9fa;
+  }
+
+  #editProfileModal .modal-footer {
+    background-color: #f8f9fa;
+  }
+
+  #editProfileModal .modal-footer .btn {
+    background-color: #28a745; /* Green button in modal */
+    color: #fff;
+    border-radius: 5px;
+  }
+
+  #editProfileModal .modal-footer .btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="profile-card">
+    <!-- Profile Image -->
+    <div class="image">
+      <img src="{% static 'images/profile.jpg' %}" alt="User Profile Image" class="profile-img">
+    </div>
+
+    <!-- Profile Info -->
+    <div class="text-data">
+      <span class="name" id="profile-name">{{ request.user.username }}</span>
+    </div>
+
+    <div class="details">
+      <ul>
+        <li><i class="fas fa-envelope"></i> <span id="profile-email">{{ request.user.email }}</span></li>
+        <li><i class="fas fa-phone"></i> +1 555-555-5555</li>
+        <li><i class="fas fa-link"></i> www.support@ezcart.com</li>
+        <li><i class="fas fa-map"></i> 123 Main Street, Anytown, USA</li>
+      </ul>
+    </div>
+
+    <!-- Edit Profile Button -->
+    <button class="profile-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
+  </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}">
+          </div><br>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+          </div><br>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ user.phone }}">
+          </div><br>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" name="address" rows="3">{{ user.address }}</textarea>
+          </div><br>
+
+          <div class="form-group">
+            <label for="profile_image">Profile Image</label>
+            <input type="file" class="form-control-file" id="profile_image" name="profile_image">
+          </div><br>
+
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

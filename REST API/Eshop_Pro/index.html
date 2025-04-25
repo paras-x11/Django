@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eShop Products</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .product { border: 1px solid #ddd; padding: 10px; margin: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>eShop Products</h1>
+    <div id="products"></div>
+
+    <script>
+        const apiUrl = "https://parasrana7.pythonanywhere.com/api/products/"; // Replace with your actual API URL
+
+        fetch("https://parasrana7.pythonanywhere.com/api/products/")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);  // Debugging: Check API response structure
+            const products = data.product; // Access the array inside the response
+
+            if (!Array.isArray(products)) {
+                console.error("Expected an array but got:", products);
+                return;
+            }
+
+            const productsDiv = document.getElementById("products");
+            productsDiv.innerHTML = ""; // Clear previous content
+
+            products.forEach(product => {
+                let productImageUrl = `https://parasrana7.pythonanywhere.com${product.productImage}`; // Full image URL
+                let productHTML = `<div class="product">
+                    <h2>${product.productName}</h2>
+                    <p>Price: ${product.productPrice}</p>
+                    <img src="${productImageUrl}" alt="${product.productName}" width="150">
+                </div>`;
+                productsDiv.innerHTML += productHTML;
+            });
+        })
+        .catch(error => console.error("Error fetching data:", error));
+
+
+
+
+    </script>
+</body>
+</html>

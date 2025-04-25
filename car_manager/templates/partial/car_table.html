@@ -1,0 +1,50 @@
+    <!-- Car Table -->
+    <div class="table-responsive">
+        <table class="table table-dark table-bordered table-hover text-light align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Model Year</th>
+                    <th>Price</th>
+                    <th>Color</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ car.name }}</td>
+                    <td>{{ car.brand }}</td>
+                    <td>{{ car.model_year }}</td>
+                    <td>₹{{ car.price }}</td>
+                    <td>{{ car.color }}</td>
+                    <td>{{ car.description }}</td>
+                    <td>
+                        {% if car.car_image %}
+                            <img src="{{ car.car_image.url }}" alt="{{ car.name }}" width="80" class="rounded">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ car.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <a href="{% url 'car_detail' car.id %}" class="btn btn-sm btn-info mb-1 w-100">View</a>
+                        <a href="{% url 'edit_car' car.id %}" class="btn btn-sm btn-warning mb-1 w-100">Edit</a>
+                        <a href="{% url 'delete_car' car.id %}" class="btn btn-sm btn-danger w-100"
+                           onclick="return confirm('Are you sure you want to delete this car?');">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" class="text-center">No cars available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>

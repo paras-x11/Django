@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Society Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group input {
+            border-radius: 25px;
+            padding: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .links-container a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div id="alert-container" class="alert-container-full">
+            <!-- Dynamic Alerts Will Be Rendered Here -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong> 
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="logo">Digital Society</div>
+        <h3 class="text-center">Log In</h3>
+        <form id="login-form" action="{% url 'login_user' %}" method="post">
+            {% csrf_token %} 
+            <div class="form-group">
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button><br><br>
+            <div class="links-container">
+                <span><a href="{% url 'forgot_password'%}">Forgot Password?</a></span>
+                <span>New User? <a href="{% url 'signup_user'%}">Register here</a></span>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    {% comment %} <script>
+        $(document).ready(function() {
+            $('#login-form').on('submit', function(event) {
+                event.preventDefault();
+
+                const username = $('#username').val();
+                const password = $('#password').val();
+
+                if (username && password) {
+                    alert('Login successful');
+                    // Implement actual login logic here
+                } else {
+                    alert('Please fill out both fields');
+                }
+            });
+        });
+    </script> {% endcomment %}
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+            viewUser()
+            $("#smbtn").show()
+            $("#upbtn").hide()
+        })
+
+        function viewUser(){
+            var row = "";
+
+            $.get("viewUser", {}, function(rt){
+
+                for ( var i in rt.allUsers ){
+                    row = row + "<tr><td>" + rt.allUsers[i].id + "</td><td>" + rt.allUsers[i].username + "</td><td>" + rt.allUsers[i].email + "</td><td>" + rt.allUsers[i].phone + "</td><td>" + "<button type='button' class='btn btn-primary' onclick='editUser("+ rt.allUsers[i].id +")'>Edit</button>" + "</td><td>" + "<button type='button' class='btn btn-danger' onclick='deleteUser("+ rt.allUsers[i].id +")'>Delete</button>" + "</td></tr>"
+                }
+                $("#tdata").html(row)
+            })
+        }
+
+        function addUser(){
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("addUser", {csrfmiddlewaretoken, uname, email, phone}, function(rt){
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewUser()
+                // $("#smbtn").show()
+                $("#upbtn").hide()
+            })
+        }
+
+        function editUser(uid){
+            $.get("getData", {uid}, function(rt){
+                $("#id").val(rt.cu.id)
+                $("#uname").val(rt.cu.username)
+                $("#email").val(rt.cu.email)
+                $("#phone").val(rt.cu.phone)
+
+                viewUser()
+                $("#smbtn").hide()
+                $("#upbtn").show()
+            })
+        }
+
+        function updateUser(){
+            var id = $("#id").val()
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("updateUser", {csrfmiddlewaretoken, id, uname, email, phone}, function(rt){
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewUser()
+                $("#smbtn").show()
+                $("#upbtn").hide()
+            })
+        }
+
+        function deleteUser(uid){
+            $.get("/deleteUser", {uid}, function(rt){
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewUser()
+                $("#smbtn").show()
+                $("#upbtn").hide()  
+            })
+        }
+
+        function searchUser(){
+            var data = $("#search").val()
+            var row = ""
+
+            $.get("searchUser", {data}, function(rt){
+                for ( var i in rt.result ){
+                    row = row + "<tr><td>" + rt.result[i].id + "</td><td>" + rt.result[i].username + "</td><td>" + rt.result[i].email + "</td><td>" + rt.result[i].phone + "</td><td>" + "<button type='button' class='btn btn-primary' onclick='editUser("+ rt.result[i].id +")'>Edit</button>" + "</td><td>" + "<button type='button' class='btn btn-danger' onclick='deleteUser("+ rt.result[i].id +")'>Delete</button>" + "</td></tr>"
+                }
+                $("#tdata").html(row)
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 card mt-5 p-4 ">
+                <input type="hidden" name="id" id="id">
+                <h2 align="center">User Registration</h2><hr>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" name="uname" id="uname" class="form-control">
+                </div><br>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control">
+                </div><br>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" class="form-control">
+                </div><br>
+                <button type="submit" id="smbtn" class="btn btn-success" onclick="addUser()" >Submit</button>
+                <button type="submit" id="upbtn" class="btn btn-success" onclick="updateUser()" >Update</button>
+            </div>
+            <div class="col-1 card mt-5 p-4 ">
+                
+            </div>
+            <div class="col-7 card mt-5 p-4 ">
+                <h2 align="center">User Details</h2><hr>
+                <input typr="text" name="search" onkeyup="searchUser()" id="search" placeholder=" Search..."><br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tdata">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

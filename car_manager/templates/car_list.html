@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Car List
+{% endblock title %}
+
+{% block body %}
+<div class="p-5 rounded bg-dark text-light shadow-lg">
+
+    <h1 class="mb-4 text-center">🚘 Car List</h1>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <hr class="text-light">
+    
+    <div class="row g-2 mb-3">
+        <!-- Search Field and Button -->
+        <div class="col-md-6 d-flex">
+          <input type="text" id="searchInput" onkeyup="getCars()" class="form-control bg-dark text-light border-light" placeholder="Search by car name or color...">
+          <button type="button" id="searchBtn" onclick="getCars()"  class="btn btn-primary ms-2">Search</button>
+        </div>
+      
+        <!-- Brand Filter and Button -->
+        <div class="col-md-6 d-flex">
+          <select  onclick="getCars()" id="brandSelect" class="form-select bg-dark text-light border-light">
+            <option value="all">Filter by Brand</option>
+            <option value="Audi">Audi</option>
+            <option value="BMW">BMW</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Maruti">Maruti</option>
+            <option value="Tesla">Tesla</option>
+            <option value="Honda">Honda</option>
+          </select>
+          <button type="button" id="filterBtn" onclick="getCars()" class="btn btn-primary ms-2">Filter</button>
+        </div>
+      </div>
+      
+      <!-- Car Table -->
+      <div id="carTable">
+
+    </div>
+      
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>    
+
+<script>
+
+    $(document).ready(function(rt){
+        getCars()
+    })
+
+    function getCars(){
+        var query = $('#searchInput').val()
+        var brand = $('#brandSelect').val()
+
+        if (query=="" || query==null || query==undefined){
+          query = "all"
+        }
+        console.log(query)
+        $.get('/getCars/', {query, brand}, function(data){
+            // console.log(data)
+            $('#carTable').html(data)
+        })
+    }
+
+</script>
+{% endblock body %}

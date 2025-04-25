@@ -1,0 +1,79 @@
+<!-- dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Digital Society{% endblock %}
+
+{% block style %} 
+<style>
+/* Dashboard Card Styling */
+.card {
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text {
+  font-size: 1.1rem;
+}</style>
+{% endblock style %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Dashboard Overview</h1>
+
+  <div class="row">
+    <!-- Total Members -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Members</h5>
+          <p class="card-text">120</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Upcoming Events</h5>
+          <p class="card-text">3 Events</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notices -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">Notices</h5>
+          <p class="card-text">5 Notices</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Latest Activity -->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Latest Activity</h5>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>User John Doe joined the society.</li>
+            <li>Event "Annual Meet" is scheduled.</li>
+            <li>Notice "Maintenance" has been posted.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

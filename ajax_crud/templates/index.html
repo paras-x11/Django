@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+            viewStudent()
+            $("#upbtn").hide()
+        })
+
+        function viewStudent(){
+            var row = "";
+
+            $.get("/viewStudent", {}, function(rt){
+                for ( var i in rt.allStudents ){
+                    row = row + "<tr><td>" + rt.allStudents[i].id +" </td><td>" + rt.allStudents[i].username +" </td><td>" + rt.allStudents[i].email +" </td><td>" + rt.allStudents[i].phone + "</td><td> <button type='button' onclick='editStudent( "+ rt.allStudents[i].id +" )' class='btn btn-primary text-center'>Edit</button>" + "</td><td> <button type='button' onclick='deletStudent( "+ rt.allStudents[i].id +" )' class='btn btn-danger'>Delete</button> </td></tr>"
+                }
+                $("#tdata").html(row)
+            })
+
+        }
+
+        function addStudent(){
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("/addStudent", {csrfmiddlewaretoken, uname, email, phone}, function(rt){
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+
+                viewStudent()
+                $("#upbtn").hide()
+            })
+
+        }
+
+        function editStudent(uid){
+            $.get("/edit", { uid }, function(rt){
+                
+                $("#id").val(rt.st[0].id)
+                $("#uname").val(rt.st[0].username)
+                $("#email").val(rt.st[0].email)
+                $("#phone").val(rt.st[0].phone)
+            })
+            $("#smbtn").hide()
+            $("#upbtn").show()
+        }
+
+        function updateStudent(){
+            var id = $("#id").val()
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("updateStudent", { csrfmiddlewaretoken, id, uname, email, phone }, function (rt) {
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewStudent()
+            })
+            
+            $("#upbtn").hide()
+            $("#smbtn").show()
+
+        }
+
+        function deletStudent(uid){
+            $.get("/deleteStudent", { uid }, function(rt){
+                $("#id").val("")
+                $("#uname").val("")
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewStudent()
+                $("#smbtn").show()
+                $("#upbtn").hide()
+
+            })
+
+        }
+
+        function searchStudent(){
+            var data = $("#search").val()
+            var row = "";
+
+            $.get("/searchStudent", {data}, function(rt){
+                for ( var i in rt.allStudents ){
+                    row = row + "<tr><td>" + rt.allStudents[i].id +" </td><td>" + rt.allStudents[i].username +" </td><td>" + rt.allStudents[i].email +" </td><td>" + rt.allStudents[i].phone + "</td><td> <button type='button' onclick='editStudent( "+ rt.allStudents[i].id +" )' class='btn btn-primary text-center'>Edit</button>" + "</td><td> <button type='button' onclick='deletStudent( "+ rt.allStudents[i].id +" )' class='btn btn-danger'>Delete</button> </td></tr>"
+                }
+                $("#tdata").html(row)
+            })
+        }
+
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 card mt-5 p-5">
+
+                <h2 align="center">Student Registration</h2>
+                <hr>
+                {% csrf_token %}
+                <input type="hidden" name="id" id="id">
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" name="uname" id="uname" class="form-control">
+                </div><br>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control">
+                </div><br>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" class="form-control">
+                </div><br>
+                <button type="submit" id="smbtn" onclick="addStudent()" class="btn btn-success">Submit</button>
+                <button type="submit" id="upbtn" onclick="updateStudent()" class="btn btn-success">Update</button>
+            </div>
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-7 card mt-5 p-5">
+                <h2 align="center">Student Details</h2><hr>
+                <input type="text" placeholder=" Search..." onkeyup="searchStudent()" name="search" id="search">
+                <table class="table">
+                    <tr>
+                        <thead>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th colspan="2" >Actions</th>
+                        </thead>
+                    </tr>
+                    <tbody id="tdata">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

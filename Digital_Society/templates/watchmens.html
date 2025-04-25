@@ -1,0 +1,58 @@
+<!-- society_watchmen.html -->
+{% extends 'base.html' %}
+
+{% block title %}Society Watchmen | Digital Society{% endblock %}
+{% block style %} 
+<style>
+    /* Watchmen list styling */
+    .list-group-item {
+      font-size: 1.1rem;
+    }
+    
+    .badge {
+      font-size: 0.9rem;
+    }
+    
+</style>
+{% endblock style %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Society Watchmen</h1>
+
+  <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addWatchmanModal">
+    Add New Watchman
+  </button>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">
+      Adam Smith <span class="badge bg-success float-end">Active</span>
+    </a>
+    <!-- Add more watchmen here -->
+  </div>
+
+  <!-- Modal for adding watchman -->
+  <div class="modal fade" id="addWatchmanModal" tabindex="-1" aria-labelledby="addWatchmanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addWatchmanModalLabel">Add New Watchman</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="watchmanName" class="form-label">Watchman Name</label>
+              <input type="text" class="form-control" id="watchmanName" required>
+            </div>
+            <div class="mb-3">
+              <label for="watchmanPhone" class="form-label">Phone Number</label>
+              <input type="text" class="form-control" id="watchmanPhone" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Watchman</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

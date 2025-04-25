@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Car Manager | Home{% endblock title %}
+
+{% block body %}
+<div class="container mt-5 p-5 rounded bg-dark text-light shadow-lg">
+    <h1 class="mb-4 text-center">🚘 Welcome to Car Manager</h1>
+
+    <div class="row">
+        <!-- Main content with buttons -->
+        <div class="col-md-8">
+            <div class="card mb-4 bg-dark text-light border-light shadow-sm">
+                <div class="card-header border-light">
+                    <h4>Add a New Car</h4>
+                </div>
+                <div class="card-body">
+                    <p>Add a car to your inventory by clicking the button below.</p>
+                    <a href="{% url 'add_car' %}" class="btn btn-primary btn-lg w-100">Add New Car</a>
+                </div>
+            </div>
+
+            <div class="card mb-4 bg-dark text-light border-light shadow-sm">
+                <div class="card-header border-light">
+                    <h4>View Car List</h4>
+                </div>
+                <div class="card-body">
+                    <p>View the list of cars you have added to the system.</p>
+                    <a href="{% url 'car_list' %}" class="btn btn-success btn-lg w-100">View Car List</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with additional feature -->
+        <div class="col-md-4">
+            <div class="card mb-4 bg-dark text-light border-light shadow-sm">
+                <div class="card-header border-light">
+                    <h4>About Us</h4>
+                </div>
+                <div class="card-body">
+                    <p>Learn more about our Car Manager platform and its features.</p>
+                    <a href="{% url 'about' %}" class="btn btn-info btn-lg w-100">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

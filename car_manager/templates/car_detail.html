@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ car.name }} {% endblock title %}
+
+{% block body %}
+<div class="container mt-5 bg-dark text-light p-5 rounded shadow-lg">
+
+    <h2 class="mb-4 text-center">{{ car.brand }} - {{ car.name }} ({{ car.model_year }})</h2>
+
+    <div class="row">
+        <!-- Car Image -->
+        <div class="col-md-5 mb-4">
+            {% if car.car_image %}
+                <img src="{{ car.car_image.url }}" alt="{{ car.name }}" class="img-fluid rounded border border-light">
+            {% else %}
+                <div class="border border-light p-4 text-center bg-secondary text-light rounded">No Image Available</div>
+            {% endif %}
+        </div>
+
+        <!-- Car Details -->
+        <div class="col-md-7">
+            <ul class="list-group mb-4">
+                <li class="list-group-item bg-dark text-light border-light"><strong>Brand:</strong> {{ car.brand }}</li>
+                <li class="list-group-item bg-dark text-light border-light"><strong>Model Year:</strong> {{ car.model_year }}</li>
+                <li class="list-group-item bg-dark text-light border-light"><strong>Price:</strong> ₹{{ car.price }}</li>
+                <li class="list-group-item bg-dark text-light border-light"><strong>Color:</strong> {{ car.color }}</li>
+                <li class="list-group-item bg-dark text-light border-light">
+                    <strong>Description:</strong><br> {{ car.description }}
+                </li>
+                <li class="list-group-item bg-dark text-light border-light">
+                    <strong>Added On:</strong> {{ car.created_at|date:"Y-m-d H:i" }}
+                </li>
+            </ul>
+            <a href="{% url 'car_list' %}" class="btn btn-outline-light w-100">⬅️ Back to Car List</a>
+        </div>
+    </div>
+
+</div>
+{% endblock body %}

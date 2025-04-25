@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock title %}
+
+{% block body %}
+<div class="container py-5">
+  <h1 class="mb-4">About Car Manager</h1>
+  
+  <div class="row">
+    <div class="col-md-8">
+      <p class="lead">
+        🚗 <strong>Car Manager</strong> is a simple web application built using Django and Bootstrap, designed to manage car records with ease.
+      </p>
+      <p>
+        You can:
+        <ul>
+          <li>Add new cars with images and details.</li>
+          <li>View a list of available cars with search and filter options.</li>
+          <li>Edit or delete existing car records.</li>
+        </ul>
+      </p>
+      <p>
+        This project is a great example of how to build a CRUD (Create, Read, Update, Delete) application using Django's ORM and templating system.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <img src="{% static 'images/car-about.png' %}" alt="About Car Manager" class="img-fluid rounded shadow">
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <h4>Developer</h4>
+  <p>
+    Made with ❤️ by <strong>Me</strong>.  
+    Feel free to reach out or contribute on <a target="_blank" href="https://github.com/paras-x11/" class="text-decoration-none">GitHub</a>!
+  </p>
+</div>
+{% endblock body %}
